@@ -3,6 +3,8 @@
 import { FormEvent, useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://escoba-bruja-mvp.vercel.app'
+
 export default function RegistroPage() {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
@@ -25,7 +27,16 @@ export default function RegistroPage() {
     const { error } = await supabase.auth.signUp({
       email,
       password,
-      options: { data: { full_name: name, requested_role: role, consent_terms: terms, consent_privacy: privacy, consent_age: age } },
+      options: {
+        emailRedirectTo: `${SITE_URL}/auth/callback?next=/panel`,
+        data: {
+          full_name: name,
+          requested_role: role,
+          consent_terms: terms,
+          consent_privacy: privacy,
+          consent_age: age,
+        },
+      },
     })
     if (error) setError(error.message)
     else setMessage('Cuenta creada. Revisa tu correo para confirmar tu dirección.')
