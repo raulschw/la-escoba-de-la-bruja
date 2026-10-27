@@ -1,10 +1,10 @@
 'use client'
 
-import { FormEvent, useState } from 'react'
+import { FormEvent, Suspense, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 
-export default function LoginPage() {
+function LoginForm() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [email, setEmail] = useState('')
@@ -41,5 +41,13 @@ export default function LoginPage() {
         <p className="mt-6 text-sm text-white/60">¿No tienes cuenta? <a className="text-witch-gold" href="/registro">Regístrate</a></p>
       </div>
     </main>
+  )
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<main className="min-h-screen bg-witch-night" />}>
+      <LoginForm />
+    </Suspense>
   )
 }
