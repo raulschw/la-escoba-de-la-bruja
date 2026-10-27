@@ -7,6 +7,7 @@ create table if not exists public.consent_logs (
 );
 
 alter table public.consent_logs enable row level security;
+drop policy if exists "consent_logs_select_own_or_admin" on public.consent_logs;
 create policy "consent_logs_select_own_or_admin" on public.consent_logs for select
 using (auth.uid() = user_id or exists (select 1 from public.profiles p where p.id = auth.uid() and p.role = 'admin' and p.deleted_at is null));
 
@@ -15,20 +16,19 @@ returns trigger
 language plpgsql
 security definer set search_path = public
 as $$
-declare requested_role text;
+declare requested_role text; consent_terms boolean; consent_privacy boolean; consent_age boolean;
 begin
   requested_role := case when new.raw_user_meta_data ->> 'requested_role' = 'tarotist' then 'tarotist' else 'client' end;
+  consent_terms := coalesce((new.raw_user_meta_data ->> 'consent_terms')::boolean, false);
+  consent_privacy := coalesce((new.raw_user_meta_data ->> 'consent_privacy')::boolean, false);
+  consent_age := coalesce((new.raw_user_meta_data ->> 'consent_age')::boolean, false);
+
   insert into public.profiles (id, role, full_name, avatar_url, consent_terms, consent_privacy, consent_age)
-  values (
-    new.id,
-    requested_role,
-    new.raw_user_meta_data ->> 'full_name',
-    new.raw_user_meta_data ->> 'avatar_url',
-    coalesce((new.raw_user_meta_data ->> 'consent_terms')::boolean, false),
-    coalesce((new.raw_user_meta_data ->> 'consent_privacy')::boolean, false),
-    coalesce((new.raw_user_meta_data ->> 'consent_age')::boolean, false)
-  )
+  values (new.id, requested_role, new.raw_user_meta_data ->> 'full_name', new.raw_user_meta_data ->> 'avatar_url', consent_terms, consent_privacy, consent_age)
   on conflict (id) do nothing;
+
+  insert into public.consent_logs (user_id, consent_type, consented)
+  values (new.id, 'terms', consent_terms), (new.id, 'privacy', consent_privacy), (new.id, 'age', consent_age);
 
   if requested_role = 'tarotist' then
     insert into public.tarotist_profiles (user_id) values (new.id) on conflict (user_id) do nothing;
