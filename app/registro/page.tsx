@@ -25,7 +25,7 @@ export default function RegistroPage() {
     const { error } = await supabase.auth.signUp({
       email,
       password,
-      options: { data: { full_name: name, requested_role: role } },
+      options: { data: { full_name: name, requested_role: role, consent_terms: terms, consent_privacy: privacy, consent_age: age } },
     })
     if (error) setError(error.message)
     else setMessage('Cuenta creada. Revisa tu correo para confirmar tu dirección.')
