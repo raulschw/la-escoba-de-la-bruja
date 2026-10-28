@@ -71,7 +71,7 @@ export default async function HomePage() {
 
           <div className="relative mx-auto w-full max-w-md">
             <div className="relative aspect-[4/3] overflow-hidden rounded-[2rem] border border-witch-gold/25 bg-black shadow-2xl shadow-black/40">
-              <img src="/assets/la-escoba-hero.webp" alt="La Escoba de la Bruja — Tarot, Videncia y Astrología" className="h-full w-full object-cover" />
+              <img src="/assets/la-escoba-hero.webp" onError={(event) => { event.currentTarget.onerror = null; event.currentTarget.src = "https://images.pexels.com/photos/7222090/pexels-photo-7222090.jpeg?auto=compress&cs=tinysrgb&w=1200"; }} alt="La Escoba de la Bruja — Tarot, Videncia y Astrología" className="h-full w-full object-cover" />
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-black/10" />
             </div>
           </div>
