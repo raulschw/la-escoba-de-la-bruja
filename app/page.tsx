@@ -41,16 +41,24 @@ export default async function HomePage() {
   return (
     <main className="min-h-screen overflow-hidden bg-witch-night text-witch-cream">
       <header className="sticky top-0 z-20 border-b border-white/10 bg-witch-night/90 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4 md:px-8">
-          <Link href="/" className="flex items-center gap-3" aria-label="La Escoba de la Bruja">
-            <span className="grid h-10 w-10 place-items-center rounded-full border border-witch-gold/50 bg-witch-gold/10 text-xl text-witch-gold">✦</span>
-            <span className="font-serif text-lg tracking-wide text-witch-cream">La Escoba <span className="text-witch-gold">de la Bruja</span></span>
+        <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 md:px-8 md:py-4">
+          <Link href="/" className="flex min-w-0 items-center gap-2 md:gap-3" aria-label="La Escoba de la Bruja">
+            <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-witch-gold/50 bg-witch-gold/10 text-xl text-witch-gold md:h-10 md:w-10">✦</span>
+            <span className="truncate font-serif text-sm tracking-wide text-witch-cream md:text-lg">La Escoba <span className="text-witch-gold">de la Bruja</span></span>
           </Link>
           <nav className="hidden items-center gap-7 text-sm text-white/75 md:flex">
             <Link href="/explorar" className="transition hover:text-witch-gold">Explorar</Link>
             <Link href="/login" className="transition hover:text-witch-gold">Iniciar sesión</Link>
           </nav>
-          <Link href="/registro" className="rounded-xl bg-witch-gold px-4 py-2.5 text-sm font-bold text-witch-night shadow-lg shadow-witch-gold/10 transition hover:-translate-y-0.5">Registrarse</Link>
+          <details className="relative md:hidden">
+            <summary aria-label="Abrir menú de navegación" className="grid h-10 w-10 cursor-pointer list-none place-items-center rounded-xl border border-white/15 text-xl text-witch-cream [&::-webkit-details-marker]:hidden">☰</summary>
+            <div className="absolute right-0 top-12 z-50 flex min-w-48 flex-col gap-1 rounded-2xl border border-white/10 bg-[#160d20] p-2 shadow-2xl">
+              <Link href="/explorar" className="rounded-xl px-4 py-3 text-sm text-white/80 hover:bg-white/5">Explorar profesionales</Link>
+              <Link href="/login" className="rounded-xl px-4 py-3 text-sm text-white/80 hover:bg-white/5">Iniciar sesión</Link>
+              <Link href="/registro" className="rounded-xl px-4 py-3 text-sm font-bold text-witch-gold hover:bg-white/5">Registrarse</Link>
+            </div>
+          </details>
+          <Link href="/registro" className="hidden rounded-xl bg-witch-gold px-4 py-2.5 text-sm font-bold text-witch-night shadow-lg shadow-witch-gold/10 transition hover:-translate-y-0.5 md:inline-flex">Registrarse</Link>
         </div>
       </header>
 
