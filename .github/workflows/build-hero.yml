@@ -19,8 +19,24 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p public/assets
-          cat hero-parts/aa.b64 hero-parts/ab.b64 hero-parts/ac.b64 | tr -d '\n\r ' | base64 -d > public/assets/la-escoba-hero.webp
+          python3 - <<'PY'
+          import base64, pathlib, re
+          parts = [pathlib.Path(p).read_text() for p in (
+              'hero-parts/aa.b64', 'hero-parts/ab.b64', 'hero-parts/ac.b64'
+          )]
+          raw = re.sub(r'[^A-Za-z0-9+/=]', '', ''.join(parts))
+          raw += '=' * ((4 - len(raw) % 4) % 4)
+          data = base64.b64decode(raw, validate=False)
+          pathlib.Path('public/assets/la-escoba-hero.webp').write_bytes(data)
+          print(f'Wrote {len(data)} bytes')
+          PY
           file public/assets/la-escoba-hero.webp
+          python3 - <<'PY'
+          from pathlib import Path
+          data = Path('public/assets/la-escoba-hero.webp').read_bytes()
+          assert data[:4] == b'RIFF' and data[8:12] == b'WEBP', 'Generated file is not a WEBP image'
+          print('WEBP header OK')
+          PY
 
       - name: Commit generated hero asset
         shell: bash
