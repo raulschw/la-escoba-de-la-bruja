@@ -19,7 +19,10 @@ export default async function TarotistPanelPage() {
   return (
     <main className="min-h-screen bg-witch-night px-5 py-10 text-witch-cream md:px-8">
       <div className="mx-auto max-w-6xl">
-        <Link href="/" className="text-sm text-witch-gold">← Ir al inicio</Link>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <Link href="/" className="text-sm text-witch-gold">← Ir al inicio</Link>
+          <Link href="/explorar" className="inline-flex items-center rounded-xl bg-witch-gold px-4 py-2.5 text-sm font-bold text-witch-night transition hover:brightness-110">✦ Ver directorio de tarotistas</Link>
+        </div>
         <div className="mt-8 flex flex-col justify-between gap-4 md:flex-row md:items-end">
           <div><p className="text-xs font-bold uppercase tracking-[0.3em] text-witch-gold">Panel profesional</p><h1 className="mt-3 font-serif text-4xl">Hola{profile?.full_name ? `, ${profile.full_name}` : ''}</h1><p className="mt-3 text-white/60">Administra tu perfil, disponibilidad y futuras consultas desde aquí.</p></div>
           <span className={`rounded-full px-4 py-2 text-sm font-semibold ${tarotist?.online ? 'bg-emerald-400 text-black' : 'border border-white/15 text-white/60'}`}>{tarotist?.online ? '● En línea' : '○ No disponible'}</span>
