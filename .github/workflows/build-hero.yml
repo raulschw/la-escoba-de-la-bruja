@@ -1,0 +1,37 @@
+name: Build hero asset
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  build-hero:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Rebuild hero image from repository chunks
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p public/assets
+          cat hero-parts/aa.b64 hero-parts/ab.b64 hero-parts/ac.b64 | tr -d '\n\r ' | base64 -d > public/assets/la-escoba-hero.webp
+          file public/assets/la-escoba-hero.webp
+
+      - name: Commit generated hero asset
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/assets/la-escoba-hero.webp
+          if git diff --cached --quiet; then
+            echo "Hero asset already up to date."
+            exit 0
+          fi
+          git commit -m "Add La Escoba hero image"
+          git push
