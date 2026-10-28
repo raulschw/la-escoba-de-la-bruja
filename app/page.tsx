@@ -70,11 +70,9 @@ export default async function HomePage() {
           </div>
 
           <div className="relative mx-auto w-full max-w-md">
-            <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem] border border-witch-gold/25 bg-gradient-to-br from-purple-950 via-[#160b25] to-black shadow-2xl shadow-black/40">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_28%,rgba(217,173,85,.32),transparent_20%),radial-gradient(circle_at_35%_65%,rgba(124,58,237,.35),transparent_35%)]" />
-              <div className="absolute left-7 top-7 rounded-full border border-witch-gold/30 bg-black/25 px-3 py-1.5 text-xs font-semibold text-witch-gold backdrop-blur">Tu consulta comienza aquí</div>
-              <div className="absolute inset-x-10 top-28 grid aspect-square place-items-center rounded-full border border-witch-gold/20 bg-white/[0.025] shadow-[0_0_100px_rgba(217,173,85,.12)]"><div className="text-center"><div className="text-7xl">☾</div><div className="mt-3 font-serif text-2xl text-witch-cream">La Escoba</div><div className="text-sm uppercase tracking-[0.28em] text-witch-gold">de la Bruja</div></div></div>
-              <div className="absolute bottom-0 left-0 right-0 border-t border-white/10 bg-black/35 p-6 backdrop-blur-xl"><p className="text-sm text-white/60">Una plataforma pensada para conectar</p><p className="mt-1 text-xl font-semibold text-witch-cream">personas con profesionales.</p></div>
+            <div className="relative aspect-[4/3] overflow-hidden rounded-[2rem] border border-witch-gold/25 bg-black shadow-2xl shadow-black/40">
+              <img src="/assets/la-escoba-hero.webp" alt="La Escoba de la Bruja — Tarot, Videncia y Astrología" className="h-full w-full object-cover" />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-black/10" />
             </div>
           </div>
         </div>
